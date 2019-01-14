@@ -8,7 +8,6 @@ use tp51\pay\service\ali\BaseAli;
 class AliAppPay  extends BaseAli {
     /**
      * app请求支付
-    ];
      * @param $request
      * @return mixed
      */

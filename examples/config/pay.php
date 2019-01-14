@@ -24,7 +24,7 @@ return [ //支付配置
             'sign_type'=>Env::get('pay:ali:ali_app.sign_type', 'RSA2'),
             //支付宝网关
             //'gatewayUrl' => "https://openapi.alipay.com/gateway.do", //生产环境
-            'gatewayUrl'=> Env::get('pay:ali:ali_app.gatewayUrl', 'gatewayUrl = https://openapi.alipaydev.com/gateway.do'), //沙箱环境
+            'gatewayUrl'=> Env::get('pay:ali:ali_app.gatewayUrl', 'https://openapi.alipaydev.com/gateway.do'), //沙箱环境
             //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
             'alipay_public_key'=>Env::get('pay:ali:ali_app.alipay_public_key', ''),
         ],
@@ -43,7 +43,7 @@ return [ //支付配置
             'sign_type'=>Env::get('pay:ali:ali_web.sign_type', 'RSA2'),
             //支付宝网关
             //'gatewayUrl' => "https://openapi.alipay.com/gateway.do", //生产环境
-            'gatewayUrl'           => Env::get('pay:ali:ali_web.gatewayUrl', 'gatewayUrl = https://openapi.alipaydev.com/gateway.do'), //沙箱环境
+            'gatewayUrl'           => Env::get('pay:ali:ali_web.gatewayUrl', 'https://openapi.alipaydev.com/gateway.do'),//沙箱环境
             //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
             'alipay_public_key'    => Env::get('pay:ali:ali_web.alipay_public_key', ''),
         ],
