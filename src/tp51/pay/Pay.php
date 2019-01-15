@@ -20,7 +20,7 @@ class Pay {
      * 版本号
      * @var string
      */
-    private $version = "1.0.0";
+    private $version = "1.0.1";
 
     /**
      * 初始化配置信息
