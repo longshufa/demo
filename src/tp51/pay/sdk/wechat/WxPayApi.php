@@ -1,6 +1,7 @@
 <?php
 namespace tp51\pay\sdk\wechat;
 use tp51\pay\sdk\wechat\wxPayData\WxPayResults;
+use tp51\pay\sdk\wechat\wxPayData\WxPayUnifiedOrder;
 
 /**
  * 
@@ -22,6 +23,7 @@ class WxPayApi
 	 */
 	public static function unifiedOrder($config, $inputObj, $timeOut = 6)
 	{
+
 		$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		//检测必填参数
 		if(!$inputObj->IsOut_trade_noSet()) {
@@ -33,10 +35,10 @@ class WxPayApi
 		}else if(!$inputObj->IsTrade_typeSet()) {
 			throw new WxPayException("缺少统一支付接口必填参数trade_type！");
 		}
-		
+
 		//关联参数
-		if($inputObj->GetTrade_type() == "JSAPI" && !$inputObj->IsOpenidSet()){
-			throw new WxPayException("统一支付接口中，缺少必填参数openid！trade_type为JSAPI时，openid为必填参数！");
+		if($inputObj->GetTrade_type() == "JSAPI" && ( !$inputObj->IsOpenidSet() && !$inputObj->IsSubOpenidSet() ) ){
+			throw new WxPayException("统一支付接口中，缺少必填参数openid！trade_type为JSAPI时，openid为必填参数！888" );
 		}
 		if($inputObj->GetTrade_type() == "NATIVE" && !$inputObj->IsProduct_idSet()){
 			throw new WxPayException("统一支付接口中，缺少必填参数product_id！trade_type为JSAPI时，product_id为必填参数！");
@@ -53,14 +55,21 @@ class WxPayApi
 		
 		$inputObj->SetAppid($config['app_id']);//公众账号ID
 		$inputObj->SetMch_id($config['mch_id']);//商户号
-		$inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip	  
-		//$inputObj->SetSpbill_create_ip("1.1.1.1");  	    
+        if( isset($config['sub_app_id']) ){
+            $inputObj->SetSubAppid($config['sub_app_id']);//服务商模式的场景appid
+        }
+
+        if( isset($config['sub_mch_id'] ) ){
+            $inputObj->SetSubMch_id($config['sub_mch_id']);//和服务商商户号有父子绑定关系的子商户号
+        }
+
+		$inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip
+//		$inputObj->SetSpbill_create_ip("1.1.1.1");
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
-		
 		//签名
 		$inputObj->SetSign($config);
 		$xml = $inputObj->ToXml();
-		
+
 		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($config, $xml, $url, false, $timeOut);
 		$result = WxPayResults::Init($config,$response);

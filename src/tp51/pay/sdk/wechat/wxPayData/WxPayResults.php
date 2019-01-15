@@ -1,6 +1,7 @@
 <?php
 
 namespace tp51\pay\sdk\wechat\wxPayData;
+use tp51\pay\sdk\wechat\WxPayException;
 
 /**
  *
@@ -75,6 +76,13 @@ class WxPayResults extends WxPayDataBase
     {
         $obj = new self();
         $obj->FromXml($xml);
+
+        $arrayData = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+
+        if($arrayData["return_code"] == "FAIL"){
+            throw new WxPayException($arrayData["return_msg"]);
+        }
+
         //fix bug 2015-06-29
         if($obj->values['mch_id']){
             return $obj->GetValues();

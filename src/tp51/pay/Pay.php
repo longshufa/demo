@@ -3,11 +3,14 @@
 namespace tp51\pay;
 
 use tp51\pay\config\PayConfig;
+use tp51\pay\sdk\ali\pagepay\service\AlipayTradeService;
+use tp51\pay\sdk\wechat\WxPayException;
 use tp51\pay\service\ali\pay\AliAppPay;
 use tp51\pay\service\ali\pay\AliWebPay;
 use tp51\pay\service\wechat\pay\AppPay;
 use tp51\pay\service\wechat\pay\PubAndMiniPay;
 use tp51\pay\service\wechat\pay\QrCodePay;
+use tp51\pay\service\wechat\pay\SubPubAndMiniPay;
 use tp51\pay\service\wechat\pay\WechatPay;
 use tp51\pay\service\wechat\refund\WechatRefund;
 
@@ -120,8 +123,21 @@ class Pay {
                 case PayConfig::WX_PUB:
                     $channel = new PubAndMiniPay($this->_config, $payData);
                     break;
+
+                /**********************服务商版*****************************/
+                case PayConfig::SUB_WX_QRCODE:
+                    break;
+                case PayConfig::SUB_WX_APP:
+                    break;
+                case PayConfig::SUB_WX_MINI: //小程序 与 公众号 统一下单 一样
+                case PayConfig::SUB_WX_PUB:
+                    $channel = new SubPubAndMiniPay($this->_config, $payData);
+                    break;
+
                 case PayConfig::WX_BAR:
                 case PayConfig::WX_WAP:
+                case PayConfig::SUB_WX_WAP:
+                case PayConfig::SUB_WX_WAP:
                     throw new \Exception(' 微信 暂不支持 刷卡支付&wap支付');
                     break;
                /********************** end 微信支付 ********************************/
@@ -147,7 +163,7 @@ class Pay {
             return $params;
 
         }catch (\Exception $e){
-            throw new \Exception("发生异常了！~~~~ 异常信息=========" . $e->getMessage() );
+            throw new \Exception("发生异常了！~~~~ 异常信息===>" . $e->getMessage() );
         }
     }
 
@@ -236,6 +252,12 @@ class Pay {
             PayConfig::WX_QRCODE, // 微信 扫码支付  (可以使用app的帐号，也可以用公众的帐号完成)
             PayConfig::WX_MINI,   // 微信小程序支付
             PayConfig::WX_WAP,    // 微信wap支付，针对特定用户
+            PayConfig::SUB_WX_APP,    //微信 APP 支付 (服务商)
+            PayConfig::SUB_WX_PUB,    // 微信 公众账号 支付(服务商)
+            PayConfig::SUB_WX_BAR,    // 微信 刷卡支付，与支付宝的条码支付对应(服务商)
+            PayConfig::SUB_WX_QRCODE, // 微信 扫码支付  (可以使用app的帐号，也可以用公众的帐号完成)(服务商)
+            PayConfig::SUB_WX_MINI,   // 微信小程序支付(服务商)
+            PayConfig::SUB_WX_WAP,    // 微信wap支付，针对特定用户(服务商)
         ];
     }
 
@@ -249,5 +271,88 @@ class Pay {
         }else{
            $this->_channel = $channel ;
         }
+    }
+
+    /**
+     * 回调验签 验签正确返回 true 验签失败 返回false
+     * @param $notifyData
+     * @return bool|string
+     */
+    public function checkSign($notifyData){
+        if( $this->_channel == PayConfig::CHANNEL_ALI_PAY ){
+            $result = $this->aliCheckSign($notifyData);
+        }else{
+            $result = $this->wxCheckSign($notifyData);
+        }
+        return $result;
+    }
+
+    /**
+     * 微信验证签名
+     * @param $notifyData
+     * @return string
+     */
+    protected function wxCheckSign($notifyData){
+        //签名步骤一：按字典序排序参数
+        ksort($notifyData);
+        $buff = "";
+        foreach ($notifyData as $k => $v)
+        {
+            if($k != "sign" && $v != "" && !is_array($v)){
+                $buff .= $k . "=" . $v . "&";
+            }
+        }
+        $buff = trim($buff, "&");
+        //签名步骤二：在string后加入KEY
+        $string = $buff . "&key=".$this->_config["key"];
+        //签名步骤三：MD5加密
+        $string = md5($string);
+        //签名步骤四：所有字符转为大写
+        $sign = strtoupper($string);
+        if( $sign != $notifyData["sign"] ){ //验签失败
+            return false;
+        }
+        return true;
+    }
+
+    protected function aliCheckSign($notifyData){
+        $AlipayService = new AlipayTradeService($this->_config);
+        $result = $AlipayService->check($notifyData);
+        if( !$result ){ //验签失败
+            return false;
+        }
+        return true;
+    }
+
+
+    public function responseNotifyResult($message){
+        $message = strtolower($message);
+        if( in_array($message, ["success", "fail"])){
+			throw new \Exception("传值3不正确");
+        }
+        if( $this->_channel == PayConfig::CHANNEL_ALI_PAY ){
+            $string = $this->responseAliNotifyResult($message);
+        }else{
+            $string = $this->responseWxNotifyResult($message);
+        }
+        return $string;
+    }
+    /**
+     * 返回支付宝参数
+     * @param $type
+     * @return string
+     */
+    protected function responseAliNotifyResult($message){
+        return strtolower($message);
+    }
+
+    /**
+     * 返回微信参数
+     * @param $type
+     * @return string
+     */
+    protected function responseWxNotifyResult($message){
+        $msg = strtoupper($message);
+        return "<xml><return_code><![CDATA[" . $msg . "]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
     }
 }

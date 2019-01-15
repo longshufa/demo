@@ -87,9 +87,22 @@ class JsApiPay
 		$jsapi->SetTimeStamp("$timeStamp");
 		$jsapi->SetNonceStr(WxPayApi::getNonceStr());
 		$jsapi->SetPackage("prepay_id=" . $UnifiedOrderResult['prepay_id']);
+        $jsapi->SetSignType("MD5");
 
-		$jsapi->SetPaySign($jsapi->MakeSign($config));
-		$parameters = json_encode($jsapi->GetValues());
+        if ( (isset($config["sub_app_id"]) && $config["sub_app_id"])  &&
+             (isset($config["sub_mch_id"]) && $config["sub_mch_id"]) ){ // 服务商版
+            $jsapi->SetPaySign($jsapi->SubMakeSign($config));
+        }else{ //普通商户版
+            $jsapi->SetPaySign($jsapi->MakeSign($config));
+        }
+
+        $jsapiValues = $jsapi->GetValues();
+        if ( (isset($config["sub_app_id"]) && $config["sub_app_id"])  &&
+            (isset($config["sub_mch_id"]) && $config["sub_mch_id"]) ){ // 服务商版 APPID 需要换成商户的APPID
+            $jsapiValues["appId"] = $config["sub_app_id"];
+        }
+
+		$parameters = json_encode($jsapiValues);
 		return $parameters;
 	}
 	

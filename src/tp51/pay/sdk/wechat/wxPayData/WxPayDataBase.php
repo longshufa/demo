@@ -104,7 +104,7 @@ class WxPayDataBase
     }
 
     /**
-     * 生成签名
+     * 生成签名 （普通商户版）
      * @return 签名，本函数不覆盖sign成员变量，如要设置签名需要调用SetSign方法赋值
      */
     public function MakeSign($config)
@@ -114,6 +114,37 @@ class WxPayDataBase
         $string = $this->ToUrlParams();
         //签名步骤二：在string后加入KEY
         $string = $string . "&key=".$config['key'];
+        //签名步骤三：MD5加密
+        $string = md5($string);
+        //签名步骤四：所有字符转为大写
+        $result = strtoupper($string);
+        return $result;
+    }
+    /**
+     * 生成签名（服务商版 ）
+     * @return 签名，本函数不覆盖sign成员变量，如要设置签名需要调用SetSign方法赋值
+     */
+    public function SubMakeSign($config)
+    {
+        $data = [
+            "appId" => $config["sub_app_id"],   //子商户的appid 参与签名
+            "timeStamp" => $this->values["timeStamp"],
+            "nonceStr" => $this->values["nonceStr"],
+            "package" => $this->values["package"],
+            "signType" => $this->values["signType"]
+        ];
+        //签名步骤一：按字典序排序参数
+        ksort($data);
+        $buff = "";
+        foreach ($data as $k => $v)
+        {
+            if($k != "sign" && $v != "" && !is_array($v)){
+                $buff .= $k . "=" . $v . "&";
+            }
+        }
+        $buff = trim($buff, "&");
+        //签名步骤二：在string后加入KEY
+        $string = $buff . "&key=".$config['key'];
         //签名步骤三：MD5加密
         $string = md5($string);
         //签名步骤四：所有字符转为大写
