@@ -1,5 +1,6 @@
 <?php
 namespace tp51\pay\sdk\wechat;
+use tp51\pay\sdk\wechat\wxPayData\WxPayRefund;
 use tp51\pay\sdk\wechat\wxPayData\WxPayResults;
 use tp51\pay\sdk\wechat\wxPayData\WxPayUnifiedOrder;
 
@@ -37,7 +38,7 @@ class WxPayApi
 		}
 
 		//关联参数
-		if($inputObj->GetTrade_type() == "JSAPI" && ( !$inputObj->IsOpenidSet() && !$inputObj->IsSubOpenidSet() ) ){
+		if($inputObj->GetTrade_type() == "JSAPI" && ( !$inputObj->IsOpenidSet() && !$inputObj->IsSubOpenidSet()) ){
 			throw new WxPayException("统一支付接口中，缺少必填参数openid！trade_type为JSAPI时，openid为必填参数！888" );
 		}
 		if($inputObj->GetTrade_type() == "NATIVE" && !$inputObj->IsProduct_idSet()){
@@ -66,6 +67,7 @@ class WxPayApi
 		$inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip
 //		$inputObj->SetSpbill_create_ip("1.1.1.1");
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
+
 		//签名
 		$inputObj->SetSign($config);
 		$xml = $inputObj->ToXml();
@@ -150,7 +152,7 @@ class WxPayApi
 	 * @throws WxPayException
 	 * @return 成功时返回，其他抛异常
 	 */
-	public static function refund($config,$inputObj, $timeOut = 6)
+	public static function refund($config, $inputObj, $timeOut = 6)
 	{
 		$url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 		//检测必填参数
@@ -168,8 +170,16 @@ class WxPayApi
         $inputObj->SetAppid($config['app_id']);//公众账号ID
         $inputObj->SetMch_id($config['mch_id']);//商户号
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
+        if( isset($config["sub_app_id"]) ){ //服务商版退款
+            $inputObj->SetSubAppid($config["sub_app_id"]);
+        }
+
+        if( isset($config["sub_mch_id"])){ //服务商版退款
+            $inputObj->SetSubMch_id($config["sub_mch_id"]);
+        }
 		
 		$inputObj->SetSign($config);//签名
+
 		$xml = $inputObj->ToXml();
 		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($config,$xml, $url, true, $timeOut);

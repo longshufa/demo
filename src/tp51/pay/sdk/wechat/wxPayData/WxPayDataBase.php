@@ -1,6 +1,7 @@
 <?php
 
 namespace tp51\pay\sdk\wechat\wxPayData;
+use think\facade\Log;
 use tp51\pay\sdk\wechat\WxPayException;
 
 /**
