@@ -9,7 +9,7 @@ class BaseDataInit {
      * 版本号
      * @var string
      */
-    private $version = "1.0.2";
+    private $version = "1.0.3";
 
     /**
      * 初始化配置信息

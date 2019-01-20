@@ -3,8 +3,10 @@ namespace app\index\controller;
 
 use tp51\pay\config\PayConfig;
 use tp51\pay\Notify;
+use tp51\pay\OrderQuery;
 use tp51\pay\Pay;
 use tp51\pay\Refund;
+use tp51\pay\RefundQuery;
 
 class Index {
     /**
@@ -111,7 +113,7 @@ class Index {
             'body'    => 'testbody',
             'subject'    => 'testsubject',
             'order_no'    =>time(),
-            'sub_openid'      =>'subopenid',  //用户openid
+            'sub_openid'      =>'sub_openid',  //用户openid
             'timeout_express' => 600, // 表示必须 600s 内付款
             'amount'    => '1',// 微信沙箱模式，需要金额固定为1
         ];
@@ -230,10 +232,10 @@ class Index {
             'total_fee'      => 1, //订单总额 单位：分 （必传）
             'transaction_id' => "4000201901161002", //第三方交易号
             'out_trade_no'   => "OR201901161002",  //商户订单号（下单订单号） 注：第三方交易号 和 商户订单 必须传一个
-            'refund_out_no'  => "RF201901161002"   //（不是必填）退款订单号
+            'out_refund_no'  => "RF201901161002"   //（不是必填）退款订单号
         ];
 
-        $obj = new Refund(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::SUB_WX_PUB);
+        $obj = new Refund(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::SUB_WX_MINI);
         $returnData = $obj->refund($data); // 第二个参数为真是，返回原始数据
         var_dump($returnData); //默认返回： *  [
         ///'out_refund_no'  => "" //商户退款单号
@@ -243,5 +245,34 @@ class Index {
     }
 
 
+    /**
+     * 退款查询
+     * @throws \Exception
+     */
+    public function refundQuery(){
+        $params = [
+            "out_refund_no"  => "", //商户退款单号 (支付宝 必传)
+            "transaction_id" => "", //第三方交易号
+            "out_trade_no"   => "", //商户订单号 （支付宝 第三方交易号或商户订单号 二选一）  微信是三选一
+        ];
 
+        $obj = new RefundQuery(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::SUB_WX_MINI);
+        $result = $obj->refundQuery($params);
+        var_dump($result);
+    }
+
+    /**
+     * 订单查询
+     * @throws \Exception
+     */
+    public function orderQuery(){
+        $params = [
+            "transaction_id" => "", //第三方交易号
+            "out_trade_no"   => "", //商户订单号 （第三方交易号或商户订单号 二选一）
+        ];
+
+        $obj = new OrderQuery(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::SUB_WX_MINI);
+        $result = $obj->orderQuery($params);
+        var_dump($result);
+    }
 }

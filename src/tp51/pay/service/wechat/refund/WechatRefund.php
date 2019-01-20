@@ -29,7 +29,7 @@ class WechatRefund extends BaseWechat {
             return $this->dealReturnData($result, $originalData);
         }else{
             Log::error("退款失败" . "\r\n退款参数：" . var_export($refundParams, 1) . "\r\n退款返回数据：" .var_export($result, 1) );
-            throw new Exception("退款失败原因 : " . $result['err_code_des'] ?? "" );
+            throw new \Exception("退款失败原因 : " . $result['err_code_des'] ?? "" );
         }
     }
 

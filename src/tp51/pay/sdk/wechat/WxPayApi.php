@@ -1,6 +1,7 @@
 <?php
 namespace tp51\pay\sdk\wechat;
 use tp51\pay\sdk\wechat\wxPayData\WxPayRefund;
+use tp51\pay\sdk\wechat\wxPayData\WxPayRefundQuery;
 use tp51\pay\sdk\wechat\wxPayData\WxPayResults;
 use tp51\pay\sdk\wechat\wxPayData\WxPayUnifiedOrder;
 
@@ -214,6 +215,14 @@ class WxPayApi
         $inputObj->SetAppid($config['app_id']);//公众账号ID
         $inputObj->SetMch_id($config['mch_id']);//商户号
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
+
+        if( isset($config["sub_app_id"]) ){ //服务商版退款
+            $inputObj->SetSubAppid($config["sub_app_id"]);
+        }
+
+        if( isset($config["sub_mch_id"])){ //服务商版退款
+            $inputObj->SetSubMch_id($config["sub_mch_id"]);
+        }
 
 		$inputObj->SetSign($config);//签名
 		$xml = $inputObj->ToXml();

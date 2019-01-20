@@ -35,6 +35,31 @@ class WxPayRefundQuery extends WxPayDataBase
         return array_key_exists('appid', $this->values);
     }
 
+    /**
+     * 设置调起支付的子商户APPID
+     * @param string $value
+     **/
+    public function SetSubAppid($value)
+    {
+        $this->values['sub_appid'] = $value;
+    }
+    /**
+     * 获取调起支付子商户APPID的值
+     * @return 值
+     **/
+    public function GetSubAppid()
+    {
+        return $this->values['sub_appid'];
+    }
+    /**
+     * 判断获取调起支付子商户APPID是否存在
+     * @return true 或 false
+     **/
+    public function IsSubAppidSet()
+    {
+        return array_key_exists('sub_appid', $this->values);
+    }
+
 
     /**
      * 设置微信支付分配的商户号
@@ -59,6 +84,31 @@ class WxPayRefundQuery extends WxPayDataBase
     public function IsMch_idSet()
     {
         return array_key_exists('mch_id', $this->values);
+    }
+
+    /**
+     * 设置子商户号
+     * @param string $value
+     **/
+    public function SetSubMch_id($value)
+    {
+        $this->values['sub_mch_id'] = $value;
+    }
+    /**
+     * 获取子商户号的值
+     * @return 值
+     **/
+    public function GetSubMch_id()
+    {
+        return $this->values['sub_mch_id'];
+    }
+    /**
+     * 判断子商户号是否存在
+     * @return true 或 false
+     **/
+    public function IsSubMch_idSet()
+    {
+        return array_key_exists('sub_mch_id', $this->values);
     }
 
 

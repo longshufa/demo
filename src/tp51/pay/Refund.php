@@ -12,7 +12,6 @@ class Refund extends BaseDataInit {
      * @param $params
      * @param bool $originalData  是否原数据返回  返回官方的数据
      * @throws \Exception
-     * @throws service\ali\refund\Exception
      */
     public function refund($params, $originalData=false) {
         try {
@@ -21,11 +20,11 @@ class Refund extends BaseDataInit {
 
             switch ( $this->_channel ) {
                 case PayConfig::CHANNEL_WECHAT_PAY:
-                    $chennel = new WechatRefund($config);
+                    $chennel = new WechatRefund($this->_config);
                     $returnData = $chennel->refund($params, $originalData);
                     break;
                 case  PayConfig::CHANNEL_ALI_PAY:
-                    $chennel = new AliRefund($config);
+                    $chennel = new AliRefund($this->_config);
                     $returnData = $chennel->refund($params, $originalData);
                     break;
 
