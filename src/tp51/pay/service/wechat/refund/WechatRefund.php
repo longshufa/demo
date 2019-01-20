@@ -61,7 +61,7 @@ class WechatRefund extends BaseWechat {
         $transaction_id = $data["transaction_id"];
         $total_fee      = $data["total_fee"];
         $refund_fee     = $data["refund_fee"];
-        $out_refund_no    = isset($data['out_refund_no']) ? $data['out_refund_no'] : ToolService::createOrderNo('RF');
+        $out_refund_no  = $data['out_refund_no'] ;
         $input = new WxPayRefund();
         $input->SetTransaction_id($transaction_id);
         $input->SetTotal_fee($total_fee);
@@ -80,7 +80,7 @@ class WechatRefund extends BaseWechat {
         $out_trade_no = $data["out_trade_no"];
         $total_fee = $data["total_fee"];
         $refund_fee = $data["refund_fee"];
-        $out_refund_no    = isset($data['out_refund_no']) ? $data['out_refund_no'] : ToolService::createOrderNo('RF') ;
+        $out_refund_no = $data['out_refund_no'];
         $input = new WxPayRefund();
         $input->SetOut_trade_no($out_trade_no);
         $input->SetTotal_fee($total_fee);

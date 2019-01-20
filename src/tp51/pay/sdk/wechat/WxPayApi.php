@@ -171,14 +171,19 @@ class WxPayApi
         $inputObj->SetAppid($config['app_id']);//公众账号ID
         $inputObj->SetMch_id($config['mch_id']);//商户号
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
-        if( isset($config["sub_app_id"]) ){ //服务商版退款
+        if( isset($config["sub_app_id"]) && $config["sub_app_id"]){ //服务商版退款
             $inputObj->SetSubAppid($config["sub_app_id"]);
         }
 
-        if( isset($config["sub_mch_id"])){ //服务商版退款
+        if( isset($config["sub_mch_id"]) && $config["sub_mch_id"]){ //服务商版退款
             $inputObj->SetSubMch_id($config["sub_mch_id"]);
         }
-		
+
+        //退款结果通知url
+        if( isset($config["refund_success_notify_url"]) && $config["refund_success_notify_url"]){
+            $inputObj->SetNotify_url($config["refund_success_notify_url"]);
+        }
+
 		$inputObj->SetSign($config);//签名
 
 		$xml = $inputObj->ToXml();

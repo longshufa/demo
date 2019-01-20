@@ -49,6 +49,9 @@ class Refund extends BaseDataInit {
         if( $params["refund_fee"] > $params["total_fee"] ){
             throw new \Exception("退款金额不能大于订单金额");
         }
+        if( !isset($params["out_refund_no"]) || empty($params["out_refund_no"]) ){
+            throw new \Exception("退款单号必填");
+        }
 
         if(  ( !isset($params['transaction_id']) && !isset($params['out_trade_no']) ) || (  (isset($params["transaction_id"]) && !$params["transaction_id"] ) && (isset($params["out_trade_no"]) && !$params["out_trade_no"] )
              )

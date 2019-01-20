@@ -8,6 +8,7 @@ use tp51\pay\sdk\ali\pagepay\service\AlipayTradeService;
 use tp51\pay\sdk\wechat\WxPayException;
 use tp51\pay\service\ali\pay\AliAppPay;
 use tp51\pay\service\ali\pay\AliWebPay;
+use tp51\pay\service\ToolService;
 use tp51\pay\service\wechat\pay\AppPay;
 use tp51\pay\service\wechat\pay\PubAndMiniPay;
 use tp51\pay\service\wechat\pay\QrCodePay;
@@ -80,6 +81,17 @@ class Pay extends BaseDataInit {
         }catch (\Exception $e){
             throw new \Exception("发生异常了~异常信息=>>>>>" . $e->getMessage() );
         }
+    }
+
+    /**
+     * 手动设置回调地址
+     * @param $value
+     */
+    public function setNotifyUrl($value){
+        if( !ToolService::checkUrl($value) ){
+            throw new \Exception("地址格式错误");
+        }
+        $this->_config["notify_url"] = $value;
     }
 
     /**

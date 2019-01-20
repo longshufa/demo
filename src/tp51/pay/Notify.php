@@ -8,6 +8,28 @@ use tp51\pay\sdk\ali\pagepay\service\AlipayTradeService;
 class Notify extends BaseDataInit {
 
     /**
+     * 微信退款结果通知
+     * @param $notifyData
+     */
+    public function wxDecrypt($notifyData){
+        //第一步 对加密串A做base64解码，得到加密串B
+        $decrypt = base64_decode($notifyData["req_info"], true);
+        $key = $this->_config["key"];
+        $xml = openssl_decrypt($decrypt , 'aes-256-ecb', md5($key), OPENSSL_RAW_DATA);
+        return $xml;
+    }
+
+    /**
+     * xml 转 数组
+     * @param $xml
+     * @return mixed
+     */
+    public function xmlToArray($xml){
+        $array = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), 1);
+        return $array;
+    }
+
+    /**
      * 回调验签 验签正确返回 true 验签失败 返回false
      * @param $notifyData
      * @return bool|string

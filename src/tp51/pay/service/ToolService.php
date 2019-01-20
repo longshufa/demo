@@ -10,15 +10,15 @@ namespace tp51\pay\service;
 
 class ToolService {
     /**
-     * 创建订单号
-     * @param string $prefix
-     * @return string
+     * 验证http 地址是否合法
+     * @param $url
+     * @return bool
      */
-    public static function createOrderNo($prefix = 'OR') {
-        $microSec = microtime(true) * 10000 % 10000;
-        if ($microSec < 1000) { //
-            $microSec = "0" . $microSec;
+    public static function checkUrl($url){
+        if( preg_match("/^(http:\/\/|https:\/\/).*$/", $url)){
+            return $url;
+        }else{
+            return false;
         }
-        return $prefix . date('YmdHis') . $microSec . rand(1000, 9999);
     }
 }

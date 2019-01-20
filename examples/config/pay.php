@@ -39,6 +39,7 @@ return [ //支付配置
             'key'          =>Env::get('pay:wechat:wx_pub.key', ''), //KEY：商户支付密钥，参考开户邮件设置（必须配置，登录商户平台自行设置）设置地址：https://pay.weixin.qq.com/index.php/account/api_cert
             'app_secret'    =>Env::get('pay:wechat:wx_pub.app_secret', ''),  //APPSECRET：公众帐号secert（仅JSAPI支付的时候需要配置， 登录公众平台，进入开发者中心可设置），获取地址：https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&token=2005451881&lang=zh_CN
             'notify_url'   =>Env::get('pay:wechat:wx_pub.notify_url', ''),//支付回调通知地址 公网外部可访问
+            'refund_success_notify_url'   =>Env::get('pay:wechat:wx_pub.refund_success_notify_url', ''), //退款结果通知url
             /***********证书路径,注意应该填写绝对路径（仅退款、撤销订单时需要，可登录商户平台下载，***********/
             /***********API证书下载地址：https://pay.weixin.qq.com/index.php/account/api_cert，下载之前需要安装商户操作证书)***********/
             'sslcert_path' =>Env::get('pay:wechat:wx_pub.sslcert_path', ''), //需要填写绝对地址
@@ -51,6 +52,7 @@ return [ //支付配置
             'key'          =>Env::get('pay:wechat:wx_mini.key', ''),//KEY：商户支付密钥，参考开户邮件设置（必须配置，登录商户平台自行设置）设置地址：https://pay.weixin.qq.com/index.php/account/api_cert
             'app_secret'    =>Env::get('pay:wechat:wx_mini.app_secret', ''),//APPSECRET：公众帐号secert（仅JSAPI支付的时候需要配置， 登录公众平台，进入开发者中心可设置），获取地址：https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&token=2005451881&lang=zh_CN
             'notify_url'   =>Env::get('pay:wechat:wx_mini.notify_url', ''),//支付回调通知地址 公网外部可访问
+            'refund_success_notify_url'   =>Env::get('pay:wechat:wx_mini.refund_success_notify_url', ''), //退款结果通知url
             /***********证书路径,注意应该填写绝对路径（仅退款、撤销订单时需要，可登录商户平台下载，***********/
             /***********API证书下载地址：https://pay.weixin.qq.com/index.php/account/api_cert，下载之前需要安装商户操作证书)***********/
             'sslcert_path' =>Env::get('pay:wechat:wx_mini.sslcert_path', ''), //需要填写绝对地址
@@ -63,6 +65,7 @@ return [ //支付配置
             'key'          =>Env::get('pay:wechat:wx_app.key', ''),
             'app_secret'    =>Env::get('pay:wechat:wx_app.app_secret', ''),
             'notify_url'   =>Env::get('pay:wechat:wx_app.notify_url', ''),
+            'refund_success_notify_url'   =>Env::get('pay:wechat:wx_app.refund_success_notify_url', ''), //退款结果通知url
             'sslcert_path' =>Env::get('pay:wechat:wx_app.sslcert_path', ''),
             'sslkey_path'  =>Env::get('pay:wechat:wx_app.sslkey_path', ''),
         ],
@@ -72,6 +75,7 @@ return [ //支付配置
             'key'          =>Env::get('pay:wechat:wx_qrcode.key', ''),
             'app_secret'    =>Env::get('pay:wechat:wx_qrcode.app_secret', ''),
             'notify_url'   =>Env::get('pay:wechat:wx_qrcode.notify_url', ''),
+            'refund_success_notify_url'   =>Env::get('pay:wechat:wx_qrcode.refund_success_notify_url', ''), //退款结果通知url
             'sslcert_path' =>Env::get('pay:wechat:wx_qrcode.sslcert_path', ''),
             'sslkey_path'  =>Env::get('pay:wechat:wx_qrcode.sslkey_path', ''),
         ],
@@ -83,6 +87,7 @@ return [ //支付配置
             'key'          =>Env::get('pay:wechat:sub_wx_mini.key', ''), //KEY：服务商商户支付密钥，参考开户邮件设置（必须配置，登录服务商商户平台自行设置）
             'app_secret'   =>Env::get('pay:wechat:sub_wx_mini.app_secret', ''), //服务商app_secret 与  服务商app_id 相匹配的
             'notify_url'   =>Env::get('pay:wechat:sub_wx_mini.notify_url', ''), //支付回调通知地址 公网外部可访问
+            'refund_success_notify_url'   =>Env::get('pay:wechat:sub_wx_mini.refund_success_notify_url', ''), //退款结果通知url 
             /***********证书路径,注意应该填写绝对路径（仅退款、撤销订单时需要，可登录商户平台下载，***********/
             /***********API证书下载地址：https://pay.weixin.qq.com/index.php/account/api_cert，下载之前需要安装商户操作证书)***********/
             'sslcert_path' =>Env::get('pay:wechat:sub_wx_mini.sslcert_path', ''), //需要填写绝对地址

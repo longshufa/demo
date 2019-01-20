@@ -15,12 +15,12 @@ class WechatRefundQuery extends BaseWechat {
      * @throws Exception
      */
     public function refundQuery($params){
-        if( isset($params["transaction_id"]) && $params["transaction_id"] ){
+        if( isset($params["out_refund_no"]) && $params["out_refund_no"] ){
+            $result = $this->queryByOutRefundNo($params["out_refund_no"]);
+        } elseif( isset($params["transaction_id"]) && $params["transaction_id"] ){
             $result =  $this->queryByTransactionId($params["transaction_id"] );
         }else if( isset($params["out_trade_no"]) && $params["out_trade_no"] ){
             $result = $this->queryByOutTradeNo($params["out_trade_no"]);
-        }else if( isset($params["out_refund_no"]) && $params["out_refund_no"] ){
-            $result = $this->queryByOutRefundNo($params["out_refund_no"]);
         }
 
         if( $result['result_code'] == 'SUCCESS' && $result['return_code'] == 'SUCCESS' ){

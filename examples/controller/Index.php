@@ -24,7 +24,7 @@ class Index {
     public function wxAppPay()
     {
         //APP 支付
-        $object = new Pay(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::WX_APP);
+        $obj = new Pay(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::WX_APP);
         $payData = [
             'body'    => 'test body',
             'subject'    => 'test subject',
@@ -32,7 +32,8 @@ class Index {
             'timeout_express' => 600, // 表示必须 600s 内付款
             'amount'    => '1',// 微信沙箱模式，需要金额固定为3.0
         ];
-        $params =  $object->pay($payData);
+        $obj->setNotifyUrl("http://www.ssssss.com/notify.php"); //可以手动设置回调地址
+        $params =  $obj->pay($payData);
         var_dump($params);
     }
 
@@ -45,7 +46,7 @@ class Index {
     public function wxQrCodePay()
     {
         //APP 支付
-        $object = new Pay(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::WX_QRCODE);
+        $obj = new Pay(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::WX_QRCODE);
         $payData = [
             'body'    => 'test body',
             'subject'    => 'test subject',
@@ -53,7 +54,8 @@ class Index {
             'timeout_express' => 600, // 表示必须 600s 内付款
             'amount'    => '1',//
         ];
-        $url =  $object->pay($payData);
+        $obj->setNotifyUrl("http://www.ssssss.com/notify.php"); //可以手动设置回调地址
+        $url =  $obj->pay($payData);
         var_dump($url);
     }
 
@@ -64,6 +66,7 @@ class Index {
      */
     public function wxQrCodeCallBack(){
         $obj = new Pay(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::WX_QRCODE);
+        $obj->setNotifyUrl("http://www.ssssss.com/notify.php"); //可以手动设置回调地址
         $obj->QrCodeCallBack();
     }
 
@@ -98,6 +101,7 @@ class Index {
             'timeout_express' => 600, // 表示必须 600s 内付款
             'amount'    => '1',// 单位：分
         ];
+        $obj->setNotifyUrl("http://www.ssssss.com/notify.php"); //可以手动设置回调地址
         $params = $obj->pay($payData);
         var_dump($params);
     }
@@ -117,6 +121,7 @@ class Index {
             'timeout_express' => 600, // 表示必须 600s 内付款
             'amount'    => '1',// 微信沙箱模式，需要金额固定为1
         ];
+        $obj->setNotifyUrl("http://www.ssssss.com/notify.php"); //可以手动设置回调地址
         $params = $obj->pay($payData);
         var_dump($params);
     }
@@ -135,6 +140,7 @@ class Index {
             'timeout_express' => '1d',  //
             'amount' => 1, //单位：分
         ];
+        $obj->setNotifyUrl("http://www.ssssss.com/notify.php"); //可以手动设置回调地址
         $params = $obj->pay($data);
         var_dump($params);
     }
@@ -232,7 +238,7 @@ class Index {
             'total_fee'      => 1, //订单总额 单位：分 （必传）
             'transaction_id' => "4000201901161002", //第三方交易号
             'out_trade_no'   => "OR201901161002",  //商户订单号（下单订单号） 注：第三方交易号 和 商户订单 必须传一个
-            'out_refund_no'  => "RF201901161002"   //（不是必填）退款订单号
+            'out_refund_no'  => "RF201901161002"   //必填退款订单号
         ];
 
         $obj = new Refund(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::SUB_WX_MINI);
@@ -244,6 +250,39 @@ class Index {
         // "refund_fee"     => "", //退款金额, 单位：分
     }
 
+    /**
+     * 退款结果通知 回调地址
+     * @throws \Exception
+     */
+    public function refundSuccessCallback(){
+        $xml = file_get_contents("php://input");
+        $notifyData = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), 1);
+
+        $obj = new Notify(PayConfig::CHANNEL_WECHAT_PAY, PayConfig::SUB_WX_MINI);
+        $result = $obj->wxDecrypt($notifyData); //解密返回 xml 格式
+        var_dump($result);
+        /**<root>
+        <out_refund_no><![CDATA[20190120004]]></out_refund_no>
+        <out_trade_no><![CDATA[15835568898]]></out_trade_no>
+        <refund_account><![CDATA[REFUND_SOURCE_UNSETTLED_FUNDS]]></refund_account>
+        <refund_fee><![CDATA[1]]></refund_fee>
+        <refund_id><![CDATA[85558255558888]]></refund_id>
+        <refund_recv_accout><![CDATA[农业银行信用卡8989]]></refund_recv_accout>
+        <refund_request_source><![CDATA[API]]></refund_request_source>
+        <refund_status><![CDATA[SUCCESS]]></refund_status>
+        <settlement_refund_fee><![CDATA[1]]></settlement_refund_fee>
+        <settlement_total_fee><![CDATA[5]]></settlement_total_fee>
+        <success_time><![CDATA[2019-01-20 12:21:21]]></success_time>
+        <total_fee><![CDATA[5]]></total_fee>
+        <transaction_id><![CDATA[420000xxxxxxxxxxxxx0957431]]></transaction_id>
+        </root>**/
+        $arr = $obj->xmlToArray($result); //xml 转数组
+        /**
+         * array ( 'out_refund_no' => '20190120004', 'out_trade_no' => '15835568898', 'refund_account' => 'REFUND_SOURCE_UNSETTLED_FUNDS', 'refund_fee' => '1', 'refund_id' => '85558255558888', 'refund_recv_accout' => '农业银行信用卡8989', 'refund_request_source' => 'API', 'refund_status' => 'SUCCESS', 'settlement_refund_fee' => '1', 'settlement_total_fee' => '5', 'success_time' => '2019-01-20 12:21:21', 'total_fee' => '5', 'transaction_id' => '420000xxxxxxxxxxxxx0957431', )
+         */
+        dump($arr);
+
+    }
 
     /**
      * 退款查询

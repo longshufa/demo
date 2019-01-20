@@ -31,7 +31,7 @@ class AliRefund extends BaseAli {
 
         //需要退款的金额，该金额不能大于订单金额，必填
         $refund_amount = trim($params['refund_fee'])/100;
-        $out_refund_no    = isset($params['out_refund_no']) ? $params['out_refund_no'] :  ToolService::createOrderNo('RF');
+        $out_refund_no    =$params['out_refund_no'];
         $RequestBuilder->setRefundAmount($refund_amount);
         $RequestBuilder->setOutRequestNo($out_refund_no);
         $aop = new AlipayTradeService($this->_config);
