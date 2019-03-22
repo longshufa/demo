@@ -31,7 +31,13 @@ class BaseAli {
         $aop->format = 'json';
         $this->aop = $aop;
         if( $payData ){ //支付宝金额 单位：元
-            $payData["amount"] = $payData["amount"] / 100;
+            $payData["total_amount"] = $payData["amount"] / 100;
+            unset($payData['amount']);
+            $payData["out_trade_no"] = $payData["order_no"];
+            unset($payData["order_no"]);
+            if( !$payData['subject'] ){
+                $payData["subject"] = $payData["body"];
+            }
         }
         $this->_payData = $payData;
         $this->_config = $config;

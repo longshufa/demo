@@ -10,15 +10,15 @@ use \think\facade\Env;
 return [ //支付配置
     'ali' => [
         'ali_app' => [  //支付宝APP支付
-            'app_id'=>Env::get('pay:ali:ali_web.app_id', ''),//应用ID,您的APPID。
-            'merchant_private_key'=>Env::get('pay:ali:ali_web.merchant_private_key', ''), //商户私钥
-            'notify_url'=>Env::get('pay:ali:ali_web.notify_url', ''), //异步通知地址
-            'return_url'=>Env::get('pay:ali:ali_web.return_url', ''), //同步跳转
-            'charset'=>Env::get('pay:ali:ali_web.charset', 'UTF-8'),//编码格式
-            'sign_type'=>Env::get('pay:ali:ali_web.sign_type', 'RSA2'),//签名方式
+            'app_id'=>Env::get('pay:ali:ali_app.app_id', ''),//应用ID,您的APPID。
+            'merchant_private_key'=>Env::get('pay:ali:ali_app.merchant_private_key', ''), //商户私钥
+            'notify_url'=>Env::get('pay:ali:ali_app.notify_url', ''), //异步通知地址
+            'return_url'=>Env::get('pay:ali:ali_app.return_url', ''), //同步跳转
+            'charset'=>Env::get('pay:ali:ali_app.charset', 'UTF-8'),//编码格式
+            'sign_type'=>Env::get('pay:ali:ali_app.sign_type', 'RSA2'),//签名方式
             //'gatewayUrl' => "https://openapi.alipay.com/gateway.do", //生产环境   //支付宝网关
-            'gatewayUrl'           => Env::get('pay:ali:ali_web.gatewayUrl', 'https://openapi.alipaydev.com/gateway.do'), //沙箱环境   //支付宝网关
-            'alipay_public_key'    => Env::get('pay:ali:ali_web.alipay_public_key', ''),  //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
+            'gatewayUrl'           => Env::get('pay:ali:ali_app.gatewayUrl', 'https://openapi.alipaydev.com/gateway.do'), //沙箱环境   //支付宝网关
+            'alipay_public_key'    => Env::get('pay:ali:ali_app.alipay_public_key', ''),  //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
         ],
         'ali_web' => [  //支付宝Web支付
             'app_id'=>Env::get('pay:ali:ali_web.app_id', ''),//应用ID,您的APPID。
