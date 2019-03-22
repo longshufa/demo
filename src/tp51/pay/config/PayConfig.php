@@ -3,7 +3,7 @@ namespace tp51\pay\config;
 
 class PayConfig {
 
-    const VERSION = '1.0.1';
+    const VERSION = '1.0.6';
     /*******************************ali相关接口************************************/
     // 支付相关常量
     const ALI_APP     = 'ali_app';// 支付宝 手机app 支付
