@@ -81,7 +81,11 @@ class WxPayResults extends WxPayDataBase
 
         if($arrayData["return_code"] == "FAIL"){
             throw new WxPayException($arrayData["return_msg"]);
-        }
+        }else{
+			if( $arrayData["result_code"] == "FAIL"){
+				throw new WxPayException("code:".$arrayData["err_code"] . $arrayData["err_code_des"]);
+			}
+		}
 
         //fix bug 2015-06-29
         if($obj->values['mch_id']){

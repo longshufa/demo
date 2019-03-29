@@ -6,12 +6,6 @@ use tp51\pay\config\PayConfig;
 
 class BaseDataInit {
     /**
-     * 版本号
-     * @var string
-     */
-    private $version = "1.0.7";
-
-    /**
      * 初始化配置信息
      * @var array
      */
