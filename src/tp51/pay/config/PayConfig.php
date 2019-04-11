@@ -6,7 +6,7 @@ class PayConfig {
      * 版本号
      * @var string
      */
-    const VERSION = '1.0.8';
+    const VERSION = '1.1.0';
     /*******************************ali相关接口************************************/
     // 支付相关常量
     const ALI_APP     = 'ali_app';// 支付宝 手机app 支付

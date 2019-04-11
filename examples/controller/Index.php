@@ -314,4 +314,23 @@ class Index {
         $result = $obj->orderQuery($params);
         var_dump($result);
     }
+
+    /**
+     * @throws \Exception
+     * array (size=3) 返回的数据
+    'out_trade_no' => string '2018041115591975138'
+    'transaction_id' => string '20180411110060001502940099579542'
+    'pay_date' => string '2019-04-11 15:59:19'
+     */
+    public function transfer(){
+        $params = [
+            "out_trade_no"  => date("YmdHis") . rand(10000, 99999), //商户转账订单号
+            "payee_account" => "xxxx@126.com",  //收款人账户
+            "amount" => 10,  //单位:分  （注：支付宝转账最低 0.1元 即 10分）
+            //            "payee_type" => "", //支付宝收款方类型 可不传 默认 支付宝登录号（即邮箱或手机号）
+        ];
+        $obj = new ToAccountTransfer(PayConfig::CHANNEL_ALI_PAY, PayConfig::ALI_TRANSFER);
+        $result = $obj->toAccountTransfer($params);
+        var_dump($result);
+    }
 }

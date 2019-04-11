@@ -1047,7 +1047,7 @@ class AopClient {
 
 					} else {
 
-						throw new Exception("check sign Fail! [sign=" . $signData->sign . ", signSourceData=" . $signData->signSourceData . "]");
+						throw new \Exception("check sign Fail! [sign=" . $signData->sign . ", signSourceData=" . $signData->signSourceData . "]");
 					}
 
 				}

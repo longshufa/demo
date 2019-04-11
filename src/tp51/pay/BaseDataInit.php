@@ -120,6 +120,7 @@ class BaseDataInit {
             PayConfig::ALI_BAR,   // 支付宝 条码支付
             PayConfig::ALI_QRCODE,// 支付宝 扫码支付
             PayConfig::ALI_WAP,   // 支付宝 手机网页 支付
+            PayConfig::ALI_TRANSFER // 支付宝 转账
         ];
     }
 
@@ -141,6 +142,7 @@ class BaseDataInit {
             PayConfig::SUB_WX_QRCODE, // 微信 扫码支付  (可以使用app的帐号，也可以用公众的帐号完成)(服务商)
             PayConfig::SUB_WX_MINI,   // 微信小程序支付(服务商)
             PayConfig::SUB_WX_WAP,    // 微信wap支付，针对特定用户(服务商)
+            PayConfig::WX_TRANSFER,   // 微信转账
         ];
     }
 

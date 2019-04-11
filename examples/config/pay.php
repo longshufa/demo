@@ -31,6 +31,22 @@ return [ //支付配置
             'gatewayUrl'           => Env::get('pay:ali:ali_web.gatewayUrl', 'https://openapi.alipaydev.com/gateway.do'), //沙箱环境   //支付宝网关
             'alipay_public_key'    => Env::get('pay:ali:ali_web.alipay_public_key', ''),  //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
         ],
+
+        'ali_transfer' => [  //支付宝转账
+            //应用ID,您的APPID。
+            'app_id'=>Env::get('pay:ali:ali_transfer.app_id', ''),
+            //商户私钥
+            'merchant_private_key'=>Env::get('pay:ali:ali_transfer.merchant_private_key', ''),
+            //编码格式
+            'charset'=>Env::get('pay:ali:ali_transfer.charset', 'UTF-8'),
+            //签名方式
+            'sign_type'=>Env::get('pay:ali:ali_transfer.sign_type', 'RSA2'),
+            //支付宝网关
+            //'gatewayUrl' => "https://openapi.alipay.com/gateway.do", //生产环境
+            'gatewayUrl'           => Env::get('pay:ali:ali_transfer.gatewayUrl', 'gatewayUrl = https://openapi.alipaydev.com/gateway.do'), //沙箱环境
+            //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
+            'alipay_public_key'    => Env::get('pay:ali:ali_transfer.alipay_public_key', 'gatewayUrl = https://openapi.alipaydev.com/gateway.do'),
+        ],
     ],
     'wechat' => [
         'wx_pub' => [ //公众号
