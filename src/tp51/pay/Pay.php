@@ -53,7 +53,6 @@ class Pay extends BaseDataInit {
                 case PayConfig::WX_BAR:
                 case PayConfig::WX_WAP:
                 case PayConfig::SUB_WX_WAP:
-                case PayConfig::SUB_WX_WAP:
                     throw new \Exception(' 微信 暂不支持 刷卡支付&wap支付');
                     break;
                /********************** end 微信支付 ********************************/

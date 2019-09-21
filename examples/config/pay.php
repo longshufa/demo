@@ -32,7 +32,7 @@ return [ //支付配置
             'alipay_public_key'    => Env::get('pay:ali:ali_web.alipay_public_key', ''),  //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
         ],
 
-        'ali_transfer' => [  //支付宝转账
+        'ali_transfer' => [  //支付宝Web支付
             //应用ID,您的APPID。
             'app_id'=>Env::get('pay:ali:ali_transfer.app_id', ''),
             //商户私钥

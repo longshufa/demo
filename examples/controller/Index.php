@@ -2,11 +2,13 @@
 namespace app\index\controller;
 
 use tp51\pay\config\PayConfig;
+use tp51\pay\GetOauth;
 use tp51\pay\Notify;
 use tp51\pay\OrderQuery;
 use tp51\pay\Pay;
 use tp51\pay\Refund;
 use tp51\pay\RefundQuery;
+use tp51\pay\ToAccountTransfer;
 
 class Index {
     /**
@@ -331,6 +333,31 @@ class Index {
         ];
         $obj = new ToAccountTransfer(PayConfig::CHANNEL_ALI_PAY, PayConfig::ALI_TRANSFER);
         $result = $obj->toAccountTransfer($params);
+        var_dump($result);
+    }
+
+
+    /**
+     *通过code获取用户授权Token
+     */
+    public function getOauthToken(){
+        $params = [
+            "code"  => date("YmdHis") . rand(10000, 99999), //授权码，用户对应用授权后得到。
+            "refresh_token" => "xxxx@126.com",  //刷刷新令牌，上次换取访问令牌时得到。见出参的refresh_token字段
+        ];
+        $obj = new GetOauth(PayConfig::CHANNEL_ALI_PAY, PayConfig::ALI_APP);
+        $result = $obj->getOauthToken($params);
+        var_dump($result);
+    }
+    /**
+     *获取用户授权信息 access_token 通过getOauthToken获取的
+     */
+    public function getOauthInfo(){
+        $params = [
+            "access_token" => "access_token",  //授权token
+        ];
+        $obj = new GetOauth(PayConfig::CHANNEL_ALI_PAY, PayConfig::ALI_APP);
+        $result = $obj->getUserInfo($params);
         var_dump($result);
     }
 }
