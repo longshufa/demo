@@ -2,7 +2,6 @@
 namespace app\index\controller;
 
 use tp51\pay\config\PayConfig;
-use tp51\pay\GetOauth;
 use tp51\pay\Notify;
 use tp51\pay\OrderQuery;
 use tp51\pay\Pay;
@@ -336,28 +335,30 @@ class Index {
         var_dump($result);
     }
 
-
     /**
-     *通过code获取用户授权Token
+     * 转账查询
+     * @throws \Exception
      */
-    public function getOauthToken(){
+    public function transferQuery(){
         $params = [
-            "code"  => date("YmdHis") . rand(10000, 99999), //授权码，用户对应用授权后得到。
-            "refresh_token" => "xxxx@126.com",  //刷刷新令牌，上次换取访问令牌时得到。见出参的refresh_token字段
+            "out_trade_no"  => '',//商户订单号
+            "transaction_id" => "",  //转账第三方交易号  两者不能同时为空
         ];
-        $obj = new GetOauth(PayConfig::CHANNEL_ALI_PAY, PayConfig::ALI_APP);
-        $result = $obj->getOauthToken($params);
+        $obj = new ToAccountTransfer(PayConfig::CHANNEL_ALI_PAY, PayConfig::ALI_TRANSFER);
+        $result = $obj->query($params);
         var_dump($result);
     }
+
     /**
-     *获取用户授权信息 access_token 通过getOauthToken获取的
+     * 支付宝资金账户资产查询
+     * @throws \Exception
      */
-    public function getOauthInfo(){
+    public function queryBalance(){
         $params = [
-            "access_token" => "access_token",  //授权token
+            "alipay_user_id"  => 'xxxxxxxxxx', //支付宝账户管理->合作伙伴管理->PID
         ];
-        $obj = new GetOauth(PayConfig::CHANNEL_ALI_PAY, PayConfig::ALI_APP);
-        $result = $obj->getUserInfo($params);
+        $obj = new Query(PayConfig::CHANNEL_ALI_PAY, PayConfig::ALI_TRANSFER);
+        $result = $obj->queryBalance($params);
         var_dump($result);
     }
 }
