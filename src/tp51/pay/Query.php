@@ -38,7 +38,7 @@ class Query extends BaseDataInit {
 
     protected function checkParams($params){
         if ( !$params["alipay_user_id"] ) {
-            throw new \Exception("蚂蚁统一会员ID必填【PID】");
+            throw new \Exception("蚂蚁统一会员ID必填");
         }
     }
 }

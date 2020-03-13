@@ -85,6 +85,18 @@ return [ //支付配置
             'sslcert_path' =>Env::get('pay:wechat:wx_app.sslcert_path', ''),
             'sslkey_path'  =>Env::get('pay:wechat:wx_app.sslkey_path', ''),
         ],
+        'sub_wx_app' =>[ //微信app相关信息  同上
+            'app_id'       =>Env::get('pay:wechat:sub_wx_app.app_id', ''), //服务商app_id
+            'mch_id'       =>Env::get('pay:wechat:sub_wx_app.mch_id', ''),//服务商商户mch_id
+            'sub_app_id'   =>Env::get('pay:wechat:sub_wx_app.sub_app_id', ''), //为服务商模式的场景appid
+            'sub_mch_id'   =>Env::get('pay:wechat:sub_wx_app.sub_mch_id', ''), //为和服务商商户号有父子绑定关系的子商户号
+            'key'          =>Env::get('pay:wechat:sub_wx_app.key', ''),  //KEY：服务商商户支付密钥，参考开户邮件设置（必须配置，登录服务商商户平台自行设置）
+            'app_secret'    =>Env::get('pay:wechat:sub_wx_app.app_secret', ''),//服务商app_secret 与  服务商app_id 相匹配的
+            'notify_url'   =>Env::get('pay:wechat:sub_wx_app.notify_url', ''), //支付回调通知地址 公网外部可访问
+            'refund_success_notify_url'   =>Env::get('pay:wechat:sub_wx_app.refund_success_notify_url', ''), //退款结果通知url
+            'sslcert_path' =>Env::get('pay:wechat:sub_wx_app.sslcert_path', ''),
+            'sslkey_path'  =>Env::get('pay:wechat:sub_wx_app.sslkey_path', ''),
+        ],
         'wx_qrcode' =>[ //微信二维码相关信息 同上
             'app_id'        =>Env::get('pay:wechat:wx_qrcode.app_id', ''),
             'mch_id'        =>Env::get('pay:wechat:wx_qrcode.mch_id', ''),

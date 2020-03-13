@@ -12,6 +12,7 @@ use tp51\pay\service\ToolService;
 use tp51\pay\service\wechat\pay\AppPay;
 use tp51\pay\service\wechat\pay\PubAndMiniPay;
 use tp51\pay\service\wechat\pay\QrCodePay;
+use tp51\pay\service\wechat\pay\SubAppPay;
 use tp51\pay\service\wechat\pay\SubPubAndMiniPay;
 use tp51\pay\service\wechat\pay\WechatPay;
 use tp51\pay\service\wechat\refund\WechatRefund;
@@ -44,6 +45,7 @@ class Pay extends BaseDataInit {
                 case PayConfig::SUB_WX_QRCODE:
                     break;
                 case PayConfig::SUB_WX_APP:
+                    $channel = new SubAppPay($this->_config, $payData);
                     break;
                 case PayConfig::SUB_WX_MINI: //小程序 与 公众号 统一下单 一样
                 case PayConfig::SUB_WX_PUB:
