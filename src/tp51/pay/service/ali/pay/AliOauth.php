@@ -34,8 +34,15 @@ class AliOauth extends BaseAli {
         }
 
         //这里和普通的接口调用不同，使用的是sdkExecute
-        $response = $this->aop->sdkExecute($request);
-        return $response;
+        $response = $this->aop->execute($request);
+        $resultObj = $response->alipay_system_oauth_token_response;
+        return [
+            'user_id'     => $resultObj->user_id,
+            'access_token' => $resultObj->access_token,
+            'expires_in'   => $resultObj->expires_in,
+            'refresh_token'   => $resultObj->refresh_token,
+            're_expires_in'   => $resultObj->re_expires_in,
+        ];
     }
 
     /**
@@ -47,7 +54,22 @@ class AliOauth extends BaseAli {
         $accessToken = $params['access_token'];
         $request = new AlipayUserInfoShareRequest();
         $response = $this->aop->execute ($request , $accessToken);
-        return $response;
-
+        $result = $response->alipay_user_info_share_response;
+        if( isset($result->code) && $result->code == 10000){
+            $data = [
+                'avatar' => $result->avatar,
+                'city'   => $result->city,
+                'gender' => $result->gender,
+                'user_id' => $result->user_id,
+                'user_type' => $result->user_type,
+                'is_certified' => $result->is_certified,
+                'nick_name' => $result->nick_name,
+                'province' => $result->province,
+                'is_student_certified' => $result->is_student_certified,
+                'user_status' => $result->user_status,
+                'city' => $result->city,
+            ];
+            return  $data;
+        }
     }
 }

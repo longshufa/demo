@@ -28,7 +28,8 @@ class AliTransfer extends BaseAli {
 		 if( isset($params['remark']) && $params['remark']){
             $data['remark'] = $params['remark'];
         }
-		 if(isset($params['payer_show_name']) && $params['payer_show_name']){
+
+        if(isset($params['payer_show_name']) && $params['payer_show_name']){
 		     $data['payer_show_name'] = $params['payer_show_name'];
         }
         $bizcontent = json_encode($data, JSON_UNESCAPED_UNICODE);
