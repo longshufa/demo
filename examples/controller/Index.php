@@ -347,7 +347,9 @@ class Index {
             "out_trade_no"  => date("YmdHis") . rand(10000, 99999), //商户转账订单号
             "payee_account" => "xxxx@126.com",  //收款人账户
             "amount" => 10,  //单位:分  （注：支付宝转账最低 0.1元 即 10分）
-            //            "payee_type" => "", //支付宝收款方类型 可不传 默认 支付宝登录号（即邮箱或手机号）
+			"payee_type" => AliTransfer::PAYEE_TYPE_USERID, //支付宝收款方类型 可不传 默认 支付宝登录号（即邮箱或手机号）
+            'payer_show_name' => '小羊淘',
+			'payee_real_name' => '', //收款方姓名 PAYEE_TYPE_LOGONID 支付宝登录号（传）
         ];
         $obj = new ToAccountTransfer(PayConfig::CHANNEL_ALI_PAY, PayConfig::ALI_TRANSFER);
         $result = $obj->toAccountTransfer($params);

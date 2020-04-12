@@ -32,6 +32,11 @@ class AliTransfer extends BaseAli {
         if(isset($params['payer_show_name']) && $params['payer_show_name']){
 		     $data['payer_show_name'] = $params['payer_show_name'];
         }
+
+        if(isset($params['payee_real_name']) && $params['payee_real_name']){
+		     $data['payee_real_name'] = $params['payee_real_name'];
+        }
+
         $bizcontent = json_encode($data, JSON_UNESCAPED_UNICODE);
         $request->setBizContent($bizcontent);
         //这里和普通的接口调用不同，使用的是sdkExecute

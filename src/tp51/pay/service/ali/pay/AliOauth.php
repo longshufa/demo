@@ -59,11 +59,9 @@ class AliOauth extends BaseAli {
             $data = [
                 'avatar' => $result->avatar,
                 'city'   => $result->city,
-                'gender' => $result->gender,
                 'user_id' => $result->user_id,
                 'user_type' => $result->user_type,
                 'is_certified' => $result->is_certified,
-                'nick_name' => $result->nick_name,
                 'province' => $result->province,
                 'is_student_certified' => $result->is_student_certified,
                 'user_status' => $result->user_status,
