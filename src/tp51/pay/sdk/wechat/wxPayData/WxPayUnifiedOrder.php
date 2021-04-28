@@ -539,4 +539,9 @@ class WxPayUnifiedOrder extends WxPayDataBase
     {
         return array_key_exists('sub_openid', $this->values);
     }
+
+    public function SetProfitSharing($value)
+    {
+        $this->values['profit_sharing'] = $value;
+    }
 }

@@ -48,6 +48,9 @@ class SubPubAndMiniPay extends BaseWechat {
         if( isset($payData["sub_openid"]) ){
             $input->SetSubOpenid($payData['sub_openid']);
         }
+        if( $payData['is_set_profit_sharing'] ){
+            $input->SetProfitSharing("Y");
+        }
         $wxOrder = WxPayApi::unifiedOrder($config, $input );
         //统一下单返回
         return $wxOrder;
