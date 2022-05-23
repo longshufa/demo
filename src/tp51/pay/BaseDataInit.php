@@ -90,7 +90,15 @@ class BaseDataInit {
      * @throws \Exception
      */
     private function _checkPayType($payType){
-        $config = config('pay.'); //文件配置信息
+		$tp_version = \think\App::VERSION;
+        if(!$tp_version){
+            $tp_version = '5.1.36';
+        }
+        if( version_compare($tp_version, '6.0.0')>=0 ){
+            $config = config('pay'); //文件配置信息
+        } else {
+            $config = config('pay.'); //文件配置信息
+        }
         if( $this->_channel == PayConfig::CHANNEL_ALI_PAY ){
             $payTypeArr = $this->_getAliAllPayType();
         }elseif ($this->_channel == PayConfig::CHANNEL_WECHAT_PAY) {
