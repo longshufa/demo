@@ -144,13 +144,15 @@ class BaseDataInit {
             PayConfig::WX_QRCODE, // 微信 扫码支付  (可以使用app的帐号，也可以用公众的帐号完成)
             PayConfig::WX_MINI,   // 微信小程序支付
             PayConfig::WX_WAP,    // 微信wap支付，针对特定用户
+            PayConfig::WX_H5,     // 微信h5支付
             PayConfig::SUB_WX_APP,    //微信 APP 支付 (服务商)
             PayConfig::SUB_WX_PUB,    // 微信 公众账号 支付(服务商)
             PayConfig::SUB_WX_BAR,    // 微信 刷卡支付，与支付宝的条码支付对应(服务商)
             PayConfig::SUB_WX_QRCODE, // 微信 扫码支付  (可以使用app的帐号，也可以用公众的帐号完成)(服务商)
             PayConfig::SUB_WX_MINI,   // 微信小程序支付(服务商)
+            PayConfig::SUB_WX_H5,     // 微信H5支付(服务商)
             PayConfig::SUB_WX_WAP,    // 微信wap支付，针对特定用户(服务商)
-            PayConfig::WX_TRANSFER,   // 微信转账
+            PayConfig::WX_TRANSFER   // 微信转账
         ];
     }
 

@@ -26,6 +26,7 @@ class PayConfig {
     const WX_PUB     = 'wx_pub';   // 微信 公众账号 支付
     const WX_QRCODE  = 'wx_qrcode';// 微信 扫码支付  (可以使用app的帐号，也可以用公众的帐号完成)
     const WX_MINI    = 'wx_mini';  // 微信小程序支付
+    const WX_H5      = 'wx_h5';    // 微信H5
 
     const WX_BAR     = 'wx_bar';   // 微信 刷卡支付
     const WX_WAP     = 'wx_wap';   // 微信wap支付，针对特定用户
@@ -35,6 +36,7 @@ class PayConfig {
     const SUB_WX_PUB     = 'sub_wx_pub';   // 微信 公众账号 支付
     const SUB_WX_QRCODE  = 'sub_wx_qrcode';// 微信 扫码支付  (可以使用app的帐号，也可以用公众的帐号完成)
     const SUB_WX_MINI    = 'sub_wx_mini';  // 微信小程序支付
+    const SUB_WX_H5      = 'sub_wx_h5';    // 微信h5支付
 
     const SUB_WX_BAR     = 'sub_wx_bar';   // 微信 刷卡支付
     const SUB_WX_WAP     = 'sub_wx_wap';   // 微信wap支付，针对特定用户

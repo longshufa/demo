@@ -45,6 +45,10 @@ class WxPayApi
 		if($inputObj->GetTrade_type() == "NATIVE" && !$inputObj->IsProduct_idSet()){
 			throw new WxPayException("统一支付接口中，缺少必填参数product_id！trade_type为JSAPI时，product_id为必填参数！");
 		}
+
+        if($inputObj->GetTrade_type() == "MWEB" && !$inputObj->IsScene_info()){
+            throw new WxPayException("统一支付接口中，缺少必填参数scene_info！trade_type为MWEB时，scene_info为必填参数！");
+        }
 		
 		//异步通知url未设置，则使用配置文件中的url
 		if(!$inputObj->IsNotify_urlSet()){
@@ -69,8 +73,8 @@ class WxPayApi
 //		$inputObj->SetSpbill_create_ip("1.1.1.1");
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 
-		//签名
-		$inputObj->SetSign($config);
+        //签名
+        $inputObj->SetSign($config);
 		$xml = $inputObj->ToXml();
 
 		$startTimeStamp = self::getMillisecond();//请求开始时间

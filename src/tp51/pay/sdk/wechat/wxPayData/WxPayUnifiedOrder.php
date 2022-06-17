@@ -544,4 +544,18 @@ class WxPayUnifiedOrder extends WxPayDataBase
     {
         $this->values['profit_sharing'] = $value;
     }
+
+    /**
+     * 判断trade_type=MWEB，此参数必传。该字段用于上报支付的场景信息,针对H5支付有三种场景,请根据对应场景上报
+     * @return true 或 false
+     **/
+    public function IsScene_info()
+    {
+        return array_key_exists('scene_info', $this->values);
+    }
+    
+    public function SetScene_info($value)
+    {
+        $this->values['scene_info'] = $value;
+    }
 }

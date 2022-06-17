@@ -85,6 +85,16 @@ return [ //支付配置
             'sslcert_path' =>Env::get('pay:wechat:wx_app.sslcert_path', ''),
             'sslkey_path'  =>Env::get('pay:wechat:wx_app.sslkey_path', ''),
         ],
+        'wx_h5' =>[ //微信app相关信息  同上
+            'app_id'        =>Env::get('pay:wechat:wx_h5.app_id', ''),
+            'mch_id'        =>Env::get('pay:wechat:wx_h5.mch_id', ''),
+            'key'          =>Env::get('pay:wechat:wx_h5.key', ''),
+            'app_secret'    =>Env::get('pay:wechat:wx_h5.app_secret', ''),
+            'notify_url'   =>Env::get('pay:wechat:wx_h5.notify_url', ''),
+            'refund_success_notify_url'   =>Env::get('pay:wechat:wx_h5.refund_success_notify_url', ''), //退款结果通知url
+            'sslcert_path' =>Env::get('pay:wechat:wx_h5.sslcert_path', ''),
+            'sslkey_path'  =>Env::get('pay:wechat:wx_h5.sslkey_path', ''),
+        ],
         'sub_wx_app' =>[ //微信app相关信息  同上
             'app_id'       =>Env::get('pay:wechat:sub_wx_app.app_id', ''), //服务商app_id
             'mch_id'       =>Env::get('pay:wechat:sub_wx_app.mch_id', ''),//服务商商户mch_id
@@ -121,6 +131,21 @@ return [ //支付配置
             'sslcert_path' =>Env::get('pay:wechat:sub_wx_mini.sslcert_path', ''), //需要填写绝对地址
             'sslkey_path'  =>Env::get('pay:wechat:sub_wx_mini.sslkey_path', ''), //需要填写绝对地址
             /****************************************** end *******************************************/
-        ]
+        ],
+        'sub_wx_h5' =>[ //微信h5相关信息
+            'app_id'       =>Env::get('pay:wechat:sub_wx_h5.app_id', ''), //服务商app_id
+            'mch_id'       =>Env::get('pay:wechat:sub_wx_h5.mch_id', ''),//服务商商户mch_id
+            'sub_app_id'   =>Env::get('pay:wechat:sub_wx_h5.sub_app_id', ''), //为服务商模式的场景appid
+            'sub_mch_id'   =>Env::get('pay:wechat:sub_wx_h5.sub_mch_id', ''), //为和服务商商户号有父子绑定关系的子商户号
+            'key'          =>Env::get('pay:wechat:sub_wx_h5.key', ''), //KEY：服务商商户支付密钥，参考开户邮件设置（必须配置，登录服务商商户平台自行设置）
+            'app_secret'   =>Env::get('pay:wechat:sub_wx_h5.app_secret', ''), //服务商app_secret 与  服务商app_id 相匹配的
+            'notify_url'   =>Env::get('pay:wechat:sub_wx_h5.notify_url', ''), //支付回调通知地址 公网外部可访问
+            'refund_success_notify_url'   =>Env::get('pay:wechat:sub_wx_h5.refund_success_notify_url', ''), //退款结果通知url
+            /***********证书路径,注意应该填写绝对路径（仅退款、撤销订单时需要，可登录商户平台下载，***********/
+            /***********API证书下载地址：https://pay.weixin.qq.com/index.php/account/api_cert，下载之前需要安装商户操作证书)***********/
+            'sslcert_path' =>Env::get('pay:wechat:sub_wx_h5.sslcert_path', ''), //需要填写绝对地址
+            'sslkey_path'  =>Env::get('pay:wechat:sub_wx_h5.sslkey_path', ''), //需要填写绝对地址
+            /****************************************** end *******************************************/
+        ],
     ]
 ];
